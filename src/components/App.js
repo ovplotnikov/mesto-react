@@ -1,15 +1,13 @@
-import logo from "./images/logo.svg";
-import Cousteau from "./images/Cousteau.jpg";
-import pencil from "./images/pencil.svg";
-// import "./App.css";
+import Cousteau from "../images/Cousteau.jpg";
+import pencil from "../images/pencil.svg";
+import React from "react";
+import Header from "./Header";
 
 function App() {
   return (
     <div className="app-container">
       <div className="page">
-        <header className="header">
-          <img src={logo} alt=" Логотип" className="header__logo" />
-        </header>
+        <Header />
         <main className="content">
           <section className="profile">
             <div className="profile__avatar-container">
