@@ -178,29 +178,6 @@ function App() {
           <p className="popup__image-title"></p>
         </div>
       </div>
-      <template class="elements-template">
-        <li class="elements__item">
-          <button
-            class="elements__delete-button button-opacity-hover"
-            type="button"
-            aria-label="delete picture"
-          ></button>
-          <img src="#" alt="#" class="elements__image" />
-          <div class="elements__info">
-            <h2 class="elements__title"></h2>
-            <div class="elements__like-container">
-              <button
-                class=" elements__like-button"
-                type="button"
-                aria-label="like button"
-              ></button>
-              <p class="elements__like-counter" data-likes="0">
-                0
-              </p>
-            </div>
-          </div>
-        </li>
-      </template>
     </div>
   );
 }
