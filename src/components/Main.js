@@ -3,12 +3,34 @@ import Cousteau from "../images/Cousteau.jpg";
 import pencil from "../images/pencil.svg";
 
 function Main() {
+  // Обработчики
+  function handleEditAvatarClick() {
+    document
+      .querySelector(".popup_type_change-avatar")
+      .classList.add("popup_opened");
+  }
+
+  function handleEditProfileClick() {
+    document
+      .querySelector(".popup_type_edit-profile")
+      .classList.add("popup_opened");
+  }
+
+  function handleAddPlaceClick() {
+    document
+      .querySelector(".popup_type_add-card")
+      .classList.add("popup_opened");
+  }
+
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
           <img src={Cousteau} alt="Аватар" className="profile__avatar-image" />
-          <div className="profile__avatar-overlay">
+          <div
+            className="profile__avatar-overlay"
+            onClick={handleEditAvatarClick}
+          >
             <img
               src={pencil}
               alt="Редактировать аватар"
@@ -22,6 +44,7 @@ function Main() {
             className="profile__edit-button button-opacity-hover"
             type="button"
             aria-label="edit profile"
+            onClick={handleEditProfileClick}
           ></button>
           <p className="profile__about">Исследователь океана</p>
         </div>
@@ -29,6 +52,7 @@ function Main() {
           className="profile__add-button button-opacity-hover"
           type="button"
           aria-label="add picture"
+          onClick={handleAddPlaceClick}
         ></button>
       </section>
       <section className="elements">
