@@ -1,4 +1,4 @@
-export default class Api {
+class Api {
   constructor(data) {
     this._baseUrl = data.baseUrl;
     this._headers = data.headers;
@@ -17,7 +17,7 @@ export default class Api {
     }).then(this._getResponseData);
   }
 
-  getUserInfo() {
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then(this._getResponseData);
@@ -69,3 +69,15 @@ export default class Api {
     }).then(this._getResponseData);
   }
 }
+
+// Создаем экземпляр класса Api
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-63",
+  headers: {
+    authorization: "e6623c64-174b-4d47-84f0-e5f6c8e0ba57",
+    "Content-Type": "application/json",
+  },
+});
+
+// Экспортируем экземпляр класса Api
+export default api;
