@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
 import pencil from "../images/pencil.svg";
 import api from "./Api";
+import Card from "./Card";
 
 function Main(props) {
-  // Declare new state variables
+  // Объявить новые переменные состояния
   const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
 
-  // Add an effect for API call
+  // Добавить эффект для вызова API
   useEffect(() => {
     api
-      .getUserData() // assuming getUserData is the correct API call
+      .getUserData()
       .then((userData) => {
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    api
+      .getInitialCards()
+      .then((cardData) => {
+        setCards(cardData);
       })
       .catch((error) => {
         console.log(error);
@@ -27,7 +38,7 @@ function Main(props) {
       <section className="profile">
         <div className="profile__avatar-container">
           <img
-            src={userAvatar} // Apply the user avatar as an img src
+            src={userAvatar} // Применить аватар пользователя как img src
             alt="Аватар"
             className="profile__avatar-image"
           />
@@ -58,7 +69,11 @@ function Main(props) {
         ></button>
       </section>
       <section className="elements">
-        <ul className="elements__list"></ul>
+        <ul className="elements__list">
+          {cards.map((card) => (
+            <Card key={card._id} card={card} /> // Используем Card  для рендеринга каждой карты
+          ))}
+        </ul>
       </section>
     </main>
   );
