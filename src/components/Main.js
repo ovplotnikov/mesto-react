@@ -71,7 +71,7 @@ function Main(props) {
       <section className="elements">
         <ul className="elements__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} /> // Используем Card  для рендеринга каждой карты
+            <Card key={card._id} card={card} onCardClick={props.onCardClick} /> // Добавили обработчик клика по карточке
           ))}
         </ul>
       </section>

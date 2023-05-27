@@ -1,6 +1,8 @@
-import React from "react";
-
 function Card(props) {
+  function handleClick() {
+    props.onCardClick(props.card);
+  }
+
   return (
     <li className="elements__item">
       <button
@@ -12,6 +14,7 @@ function Card(props) {
         src={props.card.link}
         alt={props.card.name}
         className="elements__image"
+        onClick={handleClick} // Добавлено событие onClick
       />
       <div className="elements__info">
         <h2 className="elements__title">{props.card.name}</h2>

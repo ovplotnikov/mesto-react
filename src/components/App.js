@@ -10,6 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null); // Новое состояние
 
   // Обработчики
   function handleEditAvatarClick() {
@@ -24,10 +25,16 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    // Новый обработчик
+    setSelectedCard(card);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard(null); // Сброс selectedCard
   }
 
   return (
@@ -38,6 +45,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick} // Пропс для обработчика клика по карточке
         />
         <Footer />
 
@@ -159,8 +167,8 @@ function App() {
             Сохранить
           </button>
         </PopupWithForm>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
-      <ImagePopup src="#" alt="-" title="" />
     </div>
   );
 }
