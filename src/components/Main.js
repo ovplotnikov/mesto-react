@@ -2,26 +2,7 @@ import React from "react";
 import Cousteau from "../images/Cousteau.jpg";
 import pencil from "../images/pencil.svg";
 
-function Main() {
-  // Обработчики
-  function handleEditAvatarClick() {
-    document
-      .querySelector(".popup_type_change-avatar")
-      .classList.add("popup_opened");
-  }
-
-  function handleEditProfileClick() {
-    document
-      .querySelector(".popup_type_edit-profile")
-      .classList.add("popup_opened");
-  }
-
-  function handleAddPlaceClick() {
-    document
-      .querySelector(".popup_type_add-card")
-      .classList.add("popup_opened");
-  }
-
+function Main(props) {
   return (
     <main className="content">
       <section className="profile">
@@ -29,7 +10,7 @@ function Main() {
           <img src={Cousteau} alt="Аватар" className="profile__avatar-image" />
           <div
             className="profile__avatar-overlay"
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatar} // вызов обработчика из пропсов
           >
             <img
               src={pencil}
@@ -44,7 +25,7 @@ function Main() {
             className="profile__edit-button button-opacity-hover"
             type="button"
             aria-label="edit profile"
-            onClick={handleEditProfileClick}
+            onClick={props.onEditProfile} // вызов обработчика из пропсов
           ></button>
           <p className="profile__about">Исследователь океана</p>
         </div>
@@ -52,7 +33,7 @@ function Main() {
           className="profile__add-button button-opacity-hover"
           type="button"
           aria-label="add picture"
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlace} // вызов обработчика из пропсов
         ></button>
       </section>
       <section className="elements">

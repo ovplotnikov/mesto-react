@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -6,14 +6,47 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
+  // Состояния попапов
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  // Обработчики
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
   return (
     <div className="app-container">
       <div className="page">
         <Header />
-        <Main />
+        <Main
+          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+        />
         <Footer />
 
-        <PopupWithForm name="edit-profile" title="Редактировать профиль">
+        <PopupWithForm
+          name="edit-profile"
+          title="Редактировать профиль"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             type="text"
             name="name"
@@ -52,7 +85,12 @@ function App() {
           </button>
         </PopupWithForm>
 
-        <PopupWithForm name="add-card" title="Новое место">
+        <PopupWithForm
+          name="add-card"
+          title="Новое место"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             type="text"
             name="name"
@@ -95,7 +133,12 @@ function App() {
           </button>
         </PopupWithForm>
 
-        <PopupWithForm name="change-avatar" title="Обновить аватар">
+        <PopupWithForm
+          name="change-avatar"
+          title="Обновить аватар"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             type="url"
             name="link"
