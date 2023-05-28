@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import pencil from "../images/pencil.svg";
-import api from "./Api";
+import api from "../utils/Api";
 import Card from "./Card";
 
 function Main(props) {
