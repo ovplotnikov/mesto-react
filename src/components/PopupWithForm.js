@@ -13,7 +13,6 @@ function PopupWithForm(props) {
           type="button"
           onClick={props.onClose}
         ></button>
-
         <h2 className="popup__title">{props.title}</h2>
         <form
           className="popup__form"
@@ -22,6 +21,14 @@ function PopupWithForm(props) {
           noValidate
         >
           {props.children}
+          <button
+            className="popup__save-button popup__save-button_disabled"
+            type="submit"
+            aria-label="save button"
+            disabled
+          >
+            {props.buttonText}
+          </button>
         </form>
       </div>
     </div>

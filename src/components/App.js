@@ -54,6 +54,7 @@ function App() {
           title="Редактировать профиль"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          buttonText="Сохранить"
         >
           <input
             type="text"
@@ -83,14 +84,6 @@ function App() {
             className="popup__error popup__input-error about-input-error"
             id="about-input-error"
           ></span>
-          <button
-            className="popup__save-button popup__save-button_disabled"
-            type="submit"
-            aria-label="save button"
-            disabled
-          >
-            Сохранить
-          </button>
         </PopupWithForm>
 
         <PopupWithForm
@@ -98,6 +91,7 @@ function App() {
           title="Новое место"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          buttonText="Сохранить"
         >
           <input
             type="text"
@@ -125,14 +119,6 @@ function App() {
             className="popup__error popup__input-error link-input-error"
             id="link-input-error"
           ></span>
-          <button
-            className="popup__save-button popup__save-button_disabled"
-            type="submit"
-            aria-label="save button"
-            disabled
-          >
-            Сохранить
-          </button>
         </PopupWithForm>
 
         <PopupWithForm name="confirm" title="Вы уверены?">
@@ -146,6 +132,7 @@ function App() {
           title="Обновить аватар"
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          buttonText="Сохранить"
         >
           <input
             type="url"
@@ -159,13 +146,6 @@ function App() {
             className="popup__error popup__input-error avatar-link-input-error"
             id="avatar-link-input-error"
           ></span>
-          <button
-            className="popup__save-button popup__save-button_disabled"
-            type="submit"
-            disabled
-          >
-            Сохранить
-          </button>
         </PopupWithForm>
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
