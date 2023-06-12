@@ -90,6 +90,16 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleUpdateAvatar({ avatar }) {
+    api
+      .setUserAvatar(avatar)
+      .then((userData) => {
+        setCurrentUser(userData); // обновляем состояние currentUser с новым аватаром
+        closeAllPopups(); // закрываем все попапы
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app-container">
@@ -156,6 +166,7 @@ function App() {
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar} // передаем функцию обновления аватара в EditAvatarPopup
           />
 
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />

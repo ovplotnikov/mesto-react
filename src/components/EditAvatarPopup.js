@@ -1,29 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useRef } from "react"; // Убрали useContext
 import PopupWithForm from "./PopupWithForm";
-import CurrentUserContext from "./contexts/CurrentUserContext";
-import api from "../utils/Api";
+// Убрали CurrentUserContext
+// Убрали api
 
-function EditAvatarPopup({ isOpen, onClose }) {
-  const [avatar, setAvatar] = useState("");
-  const currentUser = useContext(CurrentUserContext);
-
-  function handleChange(e) {
-    setAvatar(e.target.value);
-  }
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+  const avatarInputRef = useRef(); // Создание ссылки на элемент ввода
 
   function handleSubmit(e) {
     e.preventDefault();
 
     // обновление аватара пользователя
-    api
-      .setUserAvatar(avatar)
-      .then((res) => {
-        currentUser.setUserAvatar(res.avatar);
-        onClose();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    onUpdateAvatar({
+      avatar: avatarInputRef.current.value, // Использование ссылки для доступа к значению элемента ввода
+    });
   }
 
   return (
@@ -42,8 +31,7 @@ function EditAvatarPopup({ isOpen, onClose }) {
         placeholder="Ссылка на картинку"
         required
         id="avatar-link-input"
-        value={avatar || ""}
-        onChange={handleChange}
+        ref={avatarInputRef} // Установка ссылки на элемент ввода
       />
       <span
         className="popup__error popup__input-error avatar-link-input-error"
