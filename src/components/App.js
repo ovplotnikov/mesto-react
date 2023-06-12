@@ -79,6 +79,16 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleUpdateUser({ name, about }) {
+    api
+      .updateUserInfo({ name, about }) // ваши параметры могут отличаться, в зависимости от реализации API
+      .then((userData) => {
+        setCurrentUser(userData); // обновляем состояние currentUser
+        closeAllPopups(); // закрываем все попапы
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app-container">
@@ -90,15 +100,15 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete} // Добавьте эту строку
+            onCardDelete={handleCardDelete}
             cards={cards}
           />
-
           <Footer />
 
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser} // передаем пропс в EditProfilePopup
           />
 
           <PopupWithForm

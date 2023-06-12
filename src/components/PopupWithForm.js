@@ -19,13 +19,14 @@ function PopupWithForm(props) {
           name={props.name}
           id={`popup__form_type_${props.name}`}
           noValidate
+          onSubmit={props.onSubmit} // Добавили обработчик события onSubmit
         >
           {props.children}
           <button
-            className="popup__save-button popup__save-button_disabled"
+            className="popup__save-button" //popup__save-button_disabled"
             type="submit"
             aria-label="save button"
-            disabled
+            // disabled
           >
             {props.buttonText}
           </button>
