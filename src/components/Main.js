@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import pencil from "../images/pencil.svg";
 import api from "../utils/Api";
 import Card from "./Card";
+import CurrentUserContext from "./contexts/CurrentUserContext";
 
 function Main(props) {
-  // Объявить новые переменные состояния
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  const currentUser = useContext(CurrentUserContext);
   const [cards, setCards] = useState([]);
 
-  // Добавить эффект для вызова API
   useEffect(() => {
-    api
-      .getUserData()
-      .then((userData) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     api
       .getInitialCards()
       .then((cardData) => {
@@ -38,7 +24,7 @@ function Main(props) {
       <section className="profile">
         <div className="profile__avatar-container">
           <img
-            src={userAvatar} // Применить аватар пользователя как img src
+            src={currentUser ? currentUser.avatar : ""}
             alt="Аватар"
             className="profile__avatar-image"
           />
@@ -52,14 +38,18 @@ function Main(props) {
         </div>
 
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
+          <h1 className="profile__name">
+            {currentUser ? currentUser.name : ""}
+          </h1>
           <button
             className="profile__edit-button button-opacity-hover"
             type="button"
             aria-label="edit profile"
             onClick={props.onEditProfile}
           ></button>
-          <p className="profile__about">{userDescription}</p>
+          <p className="profile__about">
+            {currentUser ? currentUser.about : ""}
+          </p>
         </div>
         <button
           className="profile__add-button button-opacity-hover"
@@ -71,7 +61,7 @@ function Main(props) {
       <section className="elements">
         <ul className="elements__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} onCardClick={props.onCardClick} /> // Добавили обработчик клика по карточке
+            <Card key={card._id} card={card} onCardClick={props.onCardClick} />
           ))}
         </ul>
       </section>
