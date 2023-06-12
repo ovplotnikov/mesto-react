@@ -13,20 +13,17 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null); // Новое состояние
-  const [currentUser, setCurrentUser] = useState(null);
-
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
   // Эффект для получения данных пользователя
   useEffect(() => {
-    api
-      .getUserData()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
+        setCards(cardsData);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, []);
-
   // Обработчики
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -52,6 +49,35 @@ function App() {
     setSelectedCard(null); // Сброс selectedCard
   }
 
+  // Обработчик лайка
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        // Формируем новый массив на основе имеющегося, подменяя обновлённую карточку
+        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // Обработчик удаления карточки
+  function handleCardDelete(card) {
+    // Отправляем запрос на удаление в API и обновляем состояние
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        // Обновляем состояние, исключая удаленную карточку
+        const newCards = cards.filter((c) => c._id !== card._id);
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app-container">
@@ -61,8 +87,12 @@ function App() {
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick} // Пропс для обработчика клика по карточке
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete} // Добавьте эту строку
+            cards={cards}
           />
+
           <Footer />
 
           <PopupWithForm

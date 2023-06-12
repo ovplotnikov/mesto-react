@@ -19,6 +19,15 @@ function Card(props) {
     props.onCardClick(props.card);
   }
 
+  function handleLikeClick() {
+    props.onCardLike(props.card); // вызываем обработчик из props при клике на лайк
+  }
+
+  // Создайте обработчик удаления карточки
+  function handleDeleteClick() {
+    props.onCardDelete(props.card); // вызываем обработчик из props при клике на кнопку удаления
+  }
+
   return (
     <li className="elements__item">
       {isOwn && (
@@ -26,6 +35,7 @@ function Card(props) {
           className="elements__delete-button button-opacity-hover"
           type="button"
           aria-label="delete picture"
+          onClick={handleDeleteClick} // привязываем обработчик клика к кнопке удаления
         ></button>
       )}
       <img
@@ -41,6 +51,7 @@ function Card(props) {
             className={cardLikeButtonClassName}
             type="button"
             aria-label="like button"
+            onClick={handleLikeClick} // обработчик клика по кнопке "лайк"
           ></button>
           <p
             className="elements__like-counter"
