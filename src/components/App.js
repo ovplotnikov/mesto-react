@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import api from "../utils/Api";
 import CurrentUserContext from "./contexts/CurrentUserContext";
 
@@ -152,26 +153,11 @@ function App() {
             </button>
           </PopupWithForm>
 
-          <PopupWithForm
-            name="change-avatar"
-            title="Обновить аватар"
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            buttonText="Сохранить"
-          >
-            <input
-              type="url"
-              name="link"
-              className="popup__input popup__input_value_link"
-              placeholder="Ссылка на картинку"
-              required
-              id="avatar-link-input"
-            />
-            <span
-              className="popup__error popup__input-error avatar-link-input-error"
-              id="avatar-link-input-error"
-            ></span>
-          </PopupWithForm>
+          />
+
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>
       </div>
