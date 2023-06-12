@@ -23,7 +23,7 @@ function Card(props) {
     props.onCardLike(props.card); // вызываем обработчик из props при клике на лайк
   }
 
-  // Создайте обработчик удаления карточки
+  // обработчик удаления карточки
   function handleDeleteClick() {
     props.onCardDelete(props.card); // вызываем обработчик из props при клике на кнопку удаления
   }
