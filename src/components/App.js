@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import api from "../utils/Api";
 import CurrentUserContext from "./contexts/CurrentUserContext";
 
@@ -14,7 +15,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null); // Новое состояние
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   // Эффект для получения данных пользователя
@@ -40,7 +41,6 @@ function App() {
   }
 
   function handleCardClick(card) {
-    // Новый обработчик
     setSelectedCard(card);
   }
 
@@ -82,7 +82,7 @@ function App() {
 
   function handleUpdateUser({ name, about }) {
     api
-      .updateUserInfo({ name, about }) // ваши параметры могут отличаться, в зависимости от реализации API
+      .updateUserInfo({ name, about })
       .then((userData) => {
         setCurrentUser(userData); // обновляем состояние currentUser
         closeAllPopups(); // закрываем все попапы
@@ -95,6 +95,16 @@ function App() {
       .setUserAvatar(avatar)
       .then((userData) => {
         setCurrentUser(userData); // обновляем состояние currentUser с новым аватаром
+        closeAllPopups(); // закрываем все попапы
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleAddPlace({ name, link }) {
+    api
+      .createCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]); // добавляем новую карточку в начало массива
         closeAllPopups(); // закрываем все попапы
       })
       .catch((err) => console.log(err));
@@ -122,40 +132,11 @@ function App() {
             onUpdateUser={handleUpdateUser} // передаем пропс в EditProfilePopup
           />
 
-          <PopupWithForm
-            name="add-card"
-            title="Новое место"
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            buttonText="Сохранить"
-          >
-            <input
-              type="text"
-              name="name"
-              className="popup__input popup__input_value_place"
-              placeholder="Название"
-              minLength="2"
-              maxLength="30"
-              required
-              id="place-input"
-            />
-            <span
-              className="popup__error popup__input-error place-input-error"
-              id="place-input-error"
-            ></span>
-            <input
-              type="url"
-              name="link"
-              className="popup__input popup__input_value_link"
-              placeholder="Ссылка на картинку"
-              required
-              id="link-input"
-            />
-            <span
-              className="popup__error popup__input-error link-input-error"
-              id="link-input-error"
-            ></span>
-          </PopupWithForm>
+            onAddPlace={handleAddPlace} // передаем функцию добавления места в AddPlacePopup
+          />
 
           <PopupWithForm name="confirm" title="Вы уверены?">
             <button className="popup__save-button" type="submit">

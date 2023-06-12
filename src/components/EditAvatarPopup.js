@@ -1,7 +1,5 @@
-import React, { useRef } from "react"; // Убрали useContext
+import React, { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
-// Убрали CurrentUserContext
-// Убрали api
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const avatarInputRef = useRef(); // Создание ссылки на элемент ввода
