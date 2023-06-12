@@ -9,12 +9,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    // Добавляем проверку на существование значений в currentUser
-    if (currentUser.name && currentUser.about) {
+    if (currentUser.name && currentUser.about && isOpen) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);

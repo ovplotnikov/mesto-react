@@ -102,7 +102,7 @@ function App() {
 
   function handleAddPlace({ name, link }) {
     api
-      .createCard({ name, link })
+      .addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]); // добавляем новую карточку в начало массива
         closeAllPopups(); // закрываем все попапы
